@@ -234,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="sidebar-links">
         <a href="ai.php" class="sidebar-link">Content Generator</a>
         <a href="video.php" class="sidebar-link">Video Generator</a>
-        <a href="https://feedback-support.onrender.com/" class="sidebar-link">Feedback and Support</a>
+        <a href="feedback.php" class="sidebar-link">Feedback and Support</a>
     </div>
     </div>
 
