@@ -209,7 +209,7 @@ if (isset($_POST['new_conversation'])) {
 
         <a href="image.php" class="sidebar-link">Image Generator </a>
         
-        <a href="https://feedback-support.onrender.com/" class="sidebar-link">Feedback and Support </a>
+        <a href="feedback.php" class="sidebar-link">Feedback and Support </a>
         </div>
             <form id="newConversationForm" method="POST" style="display:none;">
                 <input type="hidden" name="new_conversation" value="1">
