@@ -79,12 +79,3 @@ Click the image above to see the demo of the project.
 
 ---
 
-
-## Contact
-
-If you have any questions or feedback, feel free to reach out:
-
-- **Email**: bettygetachew56@gmail.com
-- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/bethlehem-getachew-52b85827b)
-
----
