@@ -37,7 +37,7 @@ if (isset($_POST['new_conversation'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASHEWA AI</title>
+    <title>NEHABI AI</title>
     <style>
         * {
             margin: 0;
