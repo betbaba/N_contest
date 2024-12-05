@@ -1,17 +1,14 @@
 <?php
 $apiKey = "xcmVHov9ubqFIpCumize1Y6zXHdPVom8cVMklyiFZjsNXqwrmg7NLOrp";
 
-// Start the session to maintain conversation state
 session_start();
 
-// Initialize conversation from session or as an empty array
 if (!isset($_SESSION['conversation'])) {
     $_SESSION['conversation'] = [];
 }
 
 $videos = [];
 
-// If a query is submitted, process it and add to conversation
 if (isset($_POST['query'])) {
     $userQuestion = htmlspecialchars($_POST['query']);
     $_SESSION['conversation'][] = ['user' => $userQuestion];
@@ -29,7 +26,6 @@ if (isset($_POST['query'])) {
     $_SESSION['conversation'][] = ['videos' => $videos];
 }
 
-// Start a new conversation by resetting the session variable
 if (isset($_POST['new_conversation'])) {
     $_SESSION['conversation'] = [];
     $videos = [];
@@ -58,7 +54,6 @@ if (isset($_POST['new_conversation'])) {
             overflow: hidden;
         }
 
-        /* Sidebar styling */
         .sidebar {
             width: 20%;
             background-color: #0d1117;
@@ -68,34 +63,31 @@ if (isset($_POST['new_conversation'])) {
             flex-direction: column;
         }
 
-        /* Main content styling */
         .main-content {
             flex-grow: 1;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Align chat to the bottom */
+            justify-content: flex-end;
             height: 100vh;
         }
 
-        /* Header styling */
         .header {
-            margin-bottom: 20px; /* Spacing below the title */
-            color: #4dffb3; /* Changed to #4dffb3 */
-            font-size: 32px; /* Font size for the title */
-            text-align: center; /* Center the title */
+            margin-bottom: 20px;
+            color: #4dffb3;
+            font-size: 32px;
+            text-align: center;
         }
 
-        /* Chat window */
         .chat-window {
             width: 100%;
-            flex-grow: 1; /* Allow chat window to grow and fill space */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 80%; /* Set a maximum height for the chat window */
-            padding-right: 10px; /* Add padding to avoid content touching the scrollbar */
+            overflow-y: auto;
+            max-height: 80%;
+            padding-right: 10px;
         }
 
         .user-message, .ai-response {
@@ -104,23 +96,20 @@ if (isset($_POST['new_conversation'])) {
             max-width: 80%;
         }
 
-        /* User message aligned to right */
         .user-message {
-            align-self: flex-end; /* Align user messages to the right */
-            background-color: #4dffb3; /* Changed to #4dffb3 */
-            color: #0d1117; /* Changed to a darker color for contrast */
-            text-align: right; /* Right align text within the message */
+            align-self: flex-end;
+            background-color: #4dffb3;
+            color: #0d1117;
+            text-align: right;
         }
 
-        /* AI response aligned to left */
         .ai-response {
-            align-self: flex-start; /* Align AI responses to the left */
+            align-self: flex-start;
             background-color: #161b22;
-            color: #151515; /* Changed to #151515 */
-            text-align: left; /* Left align text within the message */
+            color: #151515;
+            text-align: left;
         }
 
-        /* Video display styling */
         .video-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -142,35 +131,34 @@ if (isset($_POST['new_conversation'])) {
         .video-info {
             margin-top: 10px;
             text-align: center;
-            color: #4dffb3; /* Changed to #4dffb3 */
+            color: #4dffb3;
         }
 
-        /* Chat input section */
         .chat-input {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px; /* Add space above the input */
+            margin-top: 10px;
             border-top: 1px solid #30363d;
-            padding-top: 10px; /* Add padding to the top of the input area */
+            padding-top: 10px;
         }
 
         #chatInput {
-            width: 100%; /* Full width */
+            width: 100%;
             padding: 12px;
             border: 1px solid #30363d;
             border-radius: 10px;
             background-color: #0d1117;
             color: #c9d1d9;
             outline: none;
-            margin-right: 10px; /* Space between input and button */
+            margin-right: 10px;
         }
 
         #sendBtn {
             padding: 12px 25px;
             border: none;
-            background-color: #4dffb3; /* Changed to #4dffb3 */
-            color: #0d1117; /* Changed to a darker color for contrast */
+            background-color: #4dffb3;
+            color: #0d1117;
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
@@ -184,30 +172,29 @@ if (isset($_POST['new_conversation'])) {
             color: #4dffb3;
         }
         .sidebar-links {
-    margin-top: 20px;
-}
+            margin-top: 20px;
+        }
 
-.sidebar-link {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    margin-bottom: 20px;
-    text-decoration: none; /* Remove underline from link */
-    color: #4dffb3; /* Link color */
-}
+        .sidebar-link {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #4dffb3;
+        }
 
-.sidebar-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px; /* Space between image and text */
-}
+        .sidebar-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
 
-.sidebar-link p {
-    font-size: 16px;
-    color: #4dffb3;
-}
-
+        .sidebar-link p {
+            font-size: 16px;
+            color: #4dffb3;
+        }
     </style>
 </head>
 <body>
@@ -218,11 +205,11 @@ if (isset($_POST['new_conversation'])) {
                 <li style="color: #4dffb3; cursor: pointer;" onclick="document.getElementById('newConversationForm').submit();">Start New Conversation</li>
             </ul>
             <div class="sidebar-links">
-        <a href="AI.php" class="sidebar-link">Text Generator
-        </a>
+        <a href="ai.php" class="sidebar-link">Content Generator</a>
 
-        <a href="image.php" class="sidebar-link"><p>Image Generator</p>
-        </a>
+        <a href="image.php" class="sidebar-link">Image Generator </a>
+        
+        <a href="https://feedback-support.onrender.com/" class="sidebar-link">Feedback and Support </a>
         </div>
             <form id="newConversationForm" method="POST" style="display:none;">
                 <input type="hidden" name="new_conversation" value="1">
@@ -231,7 +218,7 @@ if (isset($_POST['new_conversation'])) {
     </div>
 
     <div class="main-content">
-        <div class="header">NEHABI AI FOR VIDEO</div> <!-- Title in the main content -->
+        <div class="header">NEHABI AI FOR VIDEO</div>
         <div class="chat-window">
             <?php if (!empty($_SESSION['conversation'])): ?>
                 <?php foreach ($_SESSION['conversation'] as $entry): ?>
@@ -263,9 +250,8 @@ if (isset($_POST['new_conversation'])) {
             <?php endif; ?>
         </div>
         
-        <!-- Chat input section -->
         <div class="chat-input">
-            <form method="POST" style="width: 100%; display: flex;">
+            <form method="POST" style="width:100%; display: flex;">
                 <input type="text" id="chatInput" name="query" placeholder="Type your question here..." required>
                 <button type="submit" id="sendBtn">Send</button>
             </form>
