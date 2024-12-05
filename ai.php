@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
         <div class="sidebar-links">
         <a href="image.php" class="sidebar-link">Image Generator</a>
         <a href="video.php" class="sidebar-link">Video Generator</a>
-        <a href="feedback.php" class="sidebar-link">Feedback and Support</a>
+        <a href="feedback.html" class="sidebar-link">Feedback and Support</a>
         </a>
 
         
