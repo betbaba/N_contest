@@ -1,37 +1,32 @@
 <?php
-require 'vendor/autoload.php'; // Ensure you have installed the GroqPHP library via Composer
+require 'vendor/autoload.php';
 
 use LucianoTonet\GroqPHP\Groq;
 
-$apiKey = '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'; // Your API key
+$apiKey = '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';
 $response = '';
 $errorMessage = '';
 $messages = [];
 
-// Start the session to store messages across requests
 session_start();
 
-// Clear the messages if 'new_conversation' is set
 if (isset($_POST['new_conversation'])) {
-    unset($_SESSION['messages']); // Clear messages from the session
-    header("Location: " . $_SERVER['PHP_SELF']); // Redirect to clear the form submission
+    unset($_SESSION['messages']);
+    header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
-// Load existing messages from the session if available
 if (isset($_SESSION['messages'])) {
     $messages = $_SESSION['messages'];
 }
 
-// Handle form submission for user question
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
-    $userQuestion = htmlspecialchars($_POST['question']); // Sanitize user input
-    $messages[] = ['role' => 'user', 'content' => $userQuestion]; // Store user question
+    $userQuestion = htmlspecialchars($_POST['question']);
+    $messages[] = ['role' => 'user', 'content' => $userQuestion];
 
     $groq = new Groq($apiKey);
 
     try {
-        // Make the API request
         $response = $groq->chat()->completions()->create([
             'model' => 'llama3-8b-8192',
             'messages' => [
@@ -39,18 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
             ],
         ]);
         
-        // Extract the AI's response
         $aiResponse = $response['choices'][0]['message']['content'];
-        $messages[] = ['role' => 'ai', 'content' => $aiResponse]; // Store AI response
+        $messages[] = ['role' => 'ai', 'content' => $aiResponse];
     } catch (Exception $e) {
-        $errorMessage = "Error: " . htmlspecialchars($e->getMessage()); // Sanitize error message
-        $messages[] = ['role' => 'ai', 'content' => $errorMessage]; // Store error message
+        $errorMessage = "Error: " . htmlspecialchars($e->getMessage());
+        $messages[] = ['role' => 'ai', 'content' => $errorMessage];
     }
 
-    // Save messages back to the session
     $_SESSION['messages'] = $messages;
 
-    // Redirect to the same page to avoid form resubmission
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
@@ -78,41 +70,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
             overflow: hidden;
         }
 
-        /* Sidebar styling */
         .sidebar {
             width: 25%;
             background-color: #0d1117;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            border-right: 2px solid #4dffb3; /* Updated border color */
+            border-right: 2px solid #4dffb3;
         }
 
         .sidebar h3 {
             margin-bottom: 20px;
-            color: #4dffb3; /* Updated sidebar heading color */
+            color: #4dffb3;
         }
 
-        /* Main content styling */
         .main-content {
             flex-grow: 1;
             padding: 40px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Added for better spacing */
+            justify-content: space-between;
         }
 
         .title h1 {
             font-size: 48px;
             margin-bottom: 30px;
             letter-spacing: 5px;
-            color: #4dffb3; /* Updated title color */
-            text-align: center; /* Center align title */
+            color: #4dffb3;
+            text-align: center;
         }
 
         .chat-box {
-            width: 100%; /* Make the chat box full width */
-            height: 70%; /* Set height for chat box */
+            width: 100%;
+            height: 70%;
             overflow-y: auto;
             background-color:#191c22;
             padding: 20px;
@@ -120,31 +110,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px; /* Add gap between messages */
+            gap: 10px;
         }
 
         .message {
             padding: 10px;
             border-radius: 5px;
             max-width: 70%;
-            word-wrap: break-word; /* Allow long words to break */
+            word-wrap: break-word;
         }
 
         .user-message {
-            background-color: #4dffb3; /* Updated background for user messages */
+            background-color: #4dffb3;
             color: black;
-            align-self: flex-end; /* Align user messages to the right */
+            align-self: flex-end;
         }
 
         .ai-message {
-            background-color: #0d1117; /* Keep the AI message background color */
+            background-color: #0d1117;
             color: white;
-            align-self: flex-start; /* Align AI messages to the left */
+            align-self: flex-start;
         }
 
         .chat-input-container {
             display: flex;
-            justify-content: space-between; /* Added for spacing between input and button */
+            justify-content: space-between;
         }
 
         #chatInput {
@@ -159,41 +149,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
         #sendBtn {
             padding: 10px 20px;
             border: none;
-            background-color: #4dffb3; /* Updated button background color */
+            background-color: #4dffb3;
             color: #000;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s; /* Add transition for hover effect */
+            transition: background-color 0.3s;
         }
 
         #sendBtn:hover {
-            background-color: #33cc99; /* Change color on hover */
+            background-color: #33cc99;
         }
-        /* Styling the sidebar links */
-.sidebar-links {
-    margin-top: 20px;
-}
 
-.sidebar-link {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    margin-bottom: 20px;
-    text-decoration: none; /* Remove underline from link */
-    color: #4dffb3; /* Link color */
-}
+        .sidebar-links {
+            margin-top: 20px;
+        }
 
-.sidebar-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px; /* Space between image and text */
-}
+        .sidebar-link {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #4dffb3;
+        }
 
-.sidebar-link p {
-    font-size: 16px;
-    color: #4dffb3;
-}
+        .sidebar-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-link p {
+            font-size: 16px;
+            color: #4dffb3;
+        }
 
     </style>
 </head>
@@ -206,11 +196,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
             <input type="hidden" name="new_conversation" value="1">
         </form>
         <div class="sidebar-links">
-        <a href="image.php" class="sidebar-link">Image Generator
+        <a href="image.php" class="sidebar-link">Image Generator</a>
+        <a href="video.php" class="sidebar-link">Video Generator</a>
+        <a href="https://feedback-support.onrender.com/" class="sidebar-link">Feedback and Support</a>
         </a>
 
-        <a href="video.php" class="sidebar-link"><p>Video Generator</p>
-        </a>
+        
     </div>
 
         
@@ -238,7 +229,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
     </div>
 
     <script>
-        // Auto-scroll to the bottom of the chat box
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
     </script>
