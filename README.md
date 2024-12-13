@@ -19,7 +19,7 @@ NEHABI AI Content Generator is a web-based platform designed to assist users in 
 
 ## Demo
 
-[![See the demo video of the project](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+[![See the demo video of the project]](https://drive.google.com/file/d/1jNybVnD4MleEUHG6g_qFgBILHZIFV2rL/view?usp=drive_link)
 
 Click the image above to see the demo of the project.
 
