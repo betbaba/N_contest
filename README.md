@@ -1,6 +1,8 @@
 
 ---
+# NEHABI AI
 
+NEHABI AI Content Generator is a web-based platform designed to assist users in generating AI-driven content, including text, images, and videos, while also providing real-time support through a chatbot. The platform integrates multiple APIs to create a seamless content generation experience.
 
 ---
 
