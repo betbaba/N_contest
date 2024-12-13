@@ -1,9 +1,12 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require 'vendor/autoload.php';
 
 use LucianoTonet\GroqPHP\Groq;
 
-$apiKey = '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';
+$apiKey = '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';
 $response = '';
 $errorMessage = '';
 $messages = [];
@@ -21,30 +24,32 @@ if (isset($_SESSION['messages'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
-    $userQuestion = htmlspecialchars($_POST['question']);
-    $messages[] = ['role' => 'user', 'content' => $userQuestion];
+    $userQuestion = trim(htmlspecialchars($_POST['question']));
+    if (!empty($userQuestion)) {
+        $messages[] = ['role' => 'user', 'content' => $userQuestion];
 
-    $groq = new Groq($apiKey);
+        $groq = new Groq($apiKey);
 
-    try {
-        $response = $groq->chat()->completions()->create([
-            'model' => 'llama3-8b-8192',
-            'messages' => [
-                ['role' => 'user', 'content' => $userQuestion],
-            ],
-        ]);
-        
-        $aiResponse = $response['choices'][0]['message']['content'];
-        $messages[] = ['role' => 'ai', 'content' => $aiResponse];
-    } catch (Exception $e) {
-        $errorMessage = "Error: " . htmlspecialchars($e->getMessage());
-        $messages[] = ['role' => 'ai', 'content' => $errorMessage];
+        try {
+            $response = $groq->chat()->completions()->create([
+                'model' => 'llama3-8b-8192',
+                'messages' => [
+                    ['role' => 'user', 'content' => $userQuestion],
+                ],
+            ]);
+            
+            $aiResponse = $response['choices'][0]['message']['content'];
+            $messages[] = ['role' => 'ai', 'content' => $aiResponse];
+        } catch (Exception $e) {
+            $errorMessage = "Error: " . htmlspecialchars($e->getMessage());
+            $messages[] = ['role' => 'ai', 'content' => $errorMessage];
+        }
+
+        $_SESSION['messages'] = $messages;
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
-
-    $_SESSION['messages'] = $messages;
-
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
 }
 ?>
 
@@ -159,30 +164,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
         #sendBtn:hover {
             background-color: #33cc99;
         }
-
+        
         .sidebar-links {
             margin-top: 20px;
         }
 
         .sidebar-link {
-            display: flex;
-            flex-direction: column;
-            align-items: left;
+            display: block;
             margin-bottom: 20px;
             text-decoration: none;
             color: #4dffb3;
         }
 
-        .sidebar-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-link p {
-            font-size: 16px;
-            color: #4dffb3;
+        .sidebar-link:hover {
+            text-decoration: underline;
         }
 
     </style>
@@ -196,15 +191,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
             <input type="hidden" name="new_conversation" value="1">
         </form>
         <div class="sidebar-links">
-        <a href="image.php" class="sidebar-link">Image Generator</a>
-        <a href="video.php" class="sidebar-link">Video Generator</a>
-        <a href="feedback.html" class="sidebar-link">Feedback and Support</a>
-        </a>
-
-        
-    </div>
-
-        
+            <a href="image.php" class="sidebar-link">Image Generator</a>
+            <a href="video.php" class="sidebar-link">Video Generator</a>
+            <a href="https://feedback-support.onrender.com/" class="sidebar-link">Feedback and Support</a>
+        </div>
     </div>
 
     <div class="main-content">
@@ -222,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['question'])) {
 
         <div class="chat-input-container">
             <form method="POST" action="" style="width: 100%;">
-                <input type="text" id="chatInput" name="question" placeholder="Ask me, Anything" required>
+                <input type="text" id="chatInput" name="question" placeholder="Ask me anything..." required>
                 <button id="sendBtn" type="submit">Send</button>
             </form>
         </div>
